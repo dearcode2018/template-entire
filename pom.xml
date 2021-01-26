@@ -25,14 +25,6 @@
 	<properties>
 		<jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.version>0.0.1</maven.version>
-		<maven.plugin.compiler.version>3.3</maven.plugin.compiler.version>
-		<maven.plugin.source.version>2.4</maven.plugin.source.version>
-		<maven.plugin.surefire.version>2.18.1</maven.plugin.surefire.version>
-		<maven.plugin.assembly.version>2.5.5</maven.plugin.assembly.version>
-		<maven.plugin.resources.version>2.7</maven.plugin.resources.version>
-		<maven.plugin.dependency.version>2.10</maven.plugin.dependency.version>
-		<maven.plugin.war.version>3.0</maven.plugin.war.version>
 	</properties>  
   
   
@@ -44,7 +36,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.plugin.compiler.version}</version>
 				<configuration>
 					<compilerVersion>${jdk.version}</compilerVersion>
 					<!-- 编译的类文件是否包含调试信息 -->
@@ -87,7 +78,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven.plugin.resources.version}</version>
 				<configuration>
 					<!-- 指定文件的编码 -->
 					<encoding>${project.build.sourceEncoding}</encoding>
@@ -113,7 +103,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven.plugin.surefire.version}</version>
 				<configuration>
 					<!-- 解决 控制台输出测试信息 - 乱码 -->
 					<argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
@@ -126,12 +115,20 @@
 				</configuration>
 			</plugin>
 
-			<!-- 解决 web项目pom.xml报错 -->
+			<!-- 要将源码放上去，需要加入这个插件 -->
 			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
+				<artifactId>maven-source-plugin</artifactId>
 				<configuration>
-					<version>${maven.plugin.war.version}</version>
+					<attach>true</attach>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
